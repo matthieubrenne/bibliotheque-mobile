@@ -27,21 +27,7 @@ export default function LibraryScreen({ navigation }) {
     
     return (
         <View style={styles.container}>
-            <View style={styles.listBooks}>
-                    <FlatList
-                    data={books}
-                    renderItem= {({ item }) => (
-                        <ListItem bottomDivider onPress={()=> goToDetail(item)}>
-                            <ListItem.Content>
-                            <ListItem.Title>{item.volumeInfo.title}</ListItem.Title>
-                            </ListItem.Content>
-                            <ListItem.Chevron/>
-                        </ListItem>
-                    )}
-                    keyExtractor={item => item.id.toString()}
-                    showsVerticalScrollIndicator={false}
-                    />
-            </View>
+
             <View style={styles.searchBarView}>
                 <View style={styles.searchbar}>
                     <SearchBar
@@ -55,7 +41,22 @@ export default function LibraryScreen({ navigation }) {
                 <View style={styles.btn}>
                     <Button color= '#f5f5bb' title="ok" onPress={searchBook}/>
                 </View>
-            
+            </View>
+
+            <View style={styles.listBooks}>
+                    <FlatList
+                    data={books}
+                    renderItem= {({ item }) => (
+                        <ListItem bottomDivider onPress={()=> goToDetail(item)}>
+                            <ListItem.Content>
+                            <ListItem.Title>{item.volumeInfo.title}</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Chevron/>
+                        </ListItem>
+                    )}
+                    keyExtractor={item => item.id.toString()}
+                    showsVerticalScrollIndicator={false}
+                        />
             </View>
         </View>
     )
@@ -69,14 +70,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         flexDirection: 'row',
     },
-    listBooks: {
-        marginBottom:30
-    },
     searchbar: {
         width: '80%',
-        height: 100
+        marginVertical: 5
     },
     btn: {
         margin: 18
     }
   });
+
+//   https://www.googleapis.com/books/v1/volumes?q=harry+potter:keyes&key=AIzaSyDMtLP8uWcm6BAj8TQUbstRYlWeUEDCQbk

@@ -13,6 +13,7 @@ export default function BookScreen({ route }) {
                 <View style={styles.booksInfo}> 
                     <Text style={styles.title}>{book.volumeInfo.title}</Text>   
                     <Text style={styles.subtitle}>{book.volumeInfo.subtitle}</Text> 
+                    <Text style={styles.auteur}>Auteur(s) : {book.volumeInfo.authors}</Text>
                     <Text style={styles.description}>Description : {book.volumeInfo.description}</Text> 
                     <Image
                         style={styles.img}
@@ -45,10 +46,17 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 15,
         textAlign: 'center',
-        marginVertical: 15
+        fontWeight: '500'
     }, 
     date: {
         textAlign: 'center',
         fontStyle: 'italic'
+    },
+    auteur: {
+        textAlign: 'center',
+        marginVertical: 15
+    },
+    description: {
+        color: 'grey'
     }
   });

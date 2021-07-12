@@ -1,26 +1,30 @@
-import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, View, FlatList, Button } from 'react-native'
 import { SearchBar } from 'react-native-elements';
 import axios from 'axios';
 import { ListItem } from 'react-native-elements';
 
 export default function LibraryScreen({ navigation }) {
 
-    useEffect(() => {
-        axios.get(`https://www.googleapis.com/books/v1/volumes?q=harry+potter:keyes&key=AIzaSyDMtLP8uWcm6BAj8TQUbstRYlWeUEDCQbk&maxResults=20`)
+    const [books,setBooks] = useState([]);
+    const [search,setSearch] = useState("");
+
+    const apiKey= "AIzaSyDMtLP8uWcm6BAj8TQUbstRYlWeUEDCQbk";
+    const maxResult = 30;
+    
+    function searchBook() {
+        axios.get(`https://www.googleapis.com/books/v1/volumes?q=${search}:keyes&key=${apiKey}&maxResults=${maxResult}`)
         .then(res => {
             setBooks(res.data.items);
         })
-    }, [])
+    }
 
     function goToDetail(book) {
         navigation.navigate("Détail d'un livre", {
             book:book
         })
-      }
-
-    const [books,setBooks] = useState([]);
-
+    }   
+    
     return (
         <View style={styles.container}>
             <View style={styles.listBooks}>
@@ -39,12 +43,19 @@ export default function LibraryScreen({ navigation }) {
                     />
             </View>
             <View style={styles.searchBarView}>
-            {/* <SearchBar
-                placeholder="Rechercher"
-                onChangeText={filter}
-                platform="android"
-                lightTheme
-            /> */}
+                <View style={styles.searchbar}>
+                    <SearchBar
+                    placeholder="Rechercher un livre"
+                    onChangeText={(text) => {setSearch(text)}}
+                    value={search}
+                    platform="android"
+                    lightTheme
+                />
+                </View>
+                <View style={styles.btn}>
+                    <Button color= '#f5f5bb' title="ok" onPress={searchBook}/>
+                </View>
+            
             </View>
         </View>
     )
@@ -55,13 +66,17 @@ const styles = StyleSheet.create({
       backgroundColor: '#f9f9ec',
     },
     searchBarView: {
-        width: 300,
-        height: 40,
-        marginBottom: 40,
+        justifyContent: 'space-around',
+        flexDirection: 'row',
     },
     listBooks: {
         marginBottom:30
+    },
+    searchbar: {
+        width: '80%',
+        height: 100
+    },
+    btn: {
+        margin: 18
     }
   });
-
-//   https://www.googleapis.com/books/v1/volumes?q=harry+potter:keyes&key=AIzaSyDMtLP8uWcm6BAj8TQUbstRYlWeUEDCQbk

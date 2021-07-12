@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native'
 import { Card } from 'react-native-elements';
 
 
@@ -9,17 +9,19 @@ export default function BookScreen({ route }) {
 
     return (
         <Card style={styles.card}>
-            
-                <View> 
-                    <Text>{book.volumeInfo.title}</Text>   
-                    <Text>{book.volumeInfo.subtitle}</Text> 
-                    <Text>Description : {book.volumeInfo.description}</Text>   
-                    <Text>Date de parution: {book.volumeInfo.publishedDate}</Text>
+            <ScrollView>
+                <View style={styles.booksInfo}> 
+                    <Text style={styles.title}>{book.volumeInfo.title}</Text>   
+                    <Text style={styles.subtitle}>{book.volumeInfo.subtitle}</Text> 
+                    <Text style={styles.description}>Description : {book.volumeInfo.description}</Text> 
                     <Image
                         style={styles.img}
-                        source={book.volumeInfo.imageLinks.smallThumbnail}
-                    /> 
+                        source={{uri:book.volumeInfo.imageLinks.thumbnail}}
+                    />  
+                    <Text style={styles.date}>Date de parution: {book.volumeInfo.publishedDate}</Text>
+                     
                 </View>
+            </ScrollView>
         </Card>
     )
 }
@@ -30,6 +32,23 @@ const styles = StyleSheet.create({
     },
     img: {
         width:200,
-        height:200
+        height:300,
+        marginVertical: 20,
+        marginHorizontal: 45
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        textAlign: 'center',
+        marginVertical: 20
+    },
+    subtitle: {
+        fontSize: 15,
+        textAlign: 'center',
+        marginVertical: 15
+    }, 
+    date: {
+        textAlign: 'center',
+        fontStyle: 'italic'
     }
   });
